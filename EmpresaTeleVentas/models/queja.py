@@ -5,3 +5,6 @@ class Queja:
 
     def registrar_queja(self):
         self._estado = "registrada"
+
+    def notificar_gerente(self, gerente):
+        return gerente.gestionar_queja(self)

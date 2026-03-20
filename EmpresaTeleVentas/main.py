@@ -84,7 +84,7 @@ def main():
     queja = Queja("Demora en la entrega")
     queja.registrar_queja()
 
-    gerente = GerenteRelaciones(1, "Ana", "ana@email.com")
+    gerente = GerenteRelaciones(1, "Paula", "paula@email.com")
     print(queja.notificar_gerente(gerente))
 
     print("\n=== FIN DEL PROCESO ===")
