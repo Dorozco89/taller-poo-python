@@ -2,17 +2,13 @@ class Cliente:
     def __init__(self, id_cliente, nombre, correo, direccion):
         self._id_cliente = id_cliente
         self._nombre = nombre
-        self._correo = correo
+        self.set_correo(correo)
         self._direccion = direccion
 
-    def consultar_catalogo(self, catalogo):
-        return catalogo.obtener_productos()
+    def get_direccion(self):
+        return self._direccion
 
-    def crear_orden(self, orden):
-        return orden
-
-    def cancelar_orden(self, orden):
-        orden.cancelar_orden()
-
-    def presentar_queja(self, queja):
-        return queja
+    def set_correo(self, correo):
+        if "@" not in correo:
+            raise ValueError("Correo inválido")
+        self._correo = correo
