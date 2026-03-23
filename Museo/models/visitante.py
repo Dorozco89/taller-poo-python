@@ -1,7 +1,7 @@
 from models.usuario import Usuario
 
 
-class EncargadoCatalogo(Usuario):
+class Visitante(Usuario):
 
-    def registrar_obra(self, catalogo, obra):
-        catalogo.agregar_obra(obra)
+    def consultar_obras(self, sala):
+        return sala.listar_obras()
