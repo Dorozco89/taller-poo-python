@@ -18,15 +18,11 @@ from services.autenticacion import Autenticacion
 def main():
     print("=== SISTEMA MUSEO ===\n")
 
-    # -------------------------
-    # 1. Crear autor y periodo
-    # -------------------------
+    # DATOS INICIALES
     autor = Autor("Leonardo da Vinci", "Italia")
     periodo = Periodo("Renacimiento", "Siglo XV")
+    
 
-    # -------------------------
-    # 2. Crear obras
-    # -------------------------
     cuadro = Cuadro(1, "Mona Lisa", 1000, "1503", "2020",
                     "Óleo", "Renacimiento")
 
@@ -35,70 +31,92 @@ def main():
 
     objeto = Objeto(3, "Vasija Antigua", 500, "1200", "2019")
 
-    # -------------------------
-    # 3. Catálogo
-    # -------------------------
+
     catalogo = Catalogo()
-    encargado = EncargadoCatalogo(1, "Santiago", "correo@mail.com", "123")
+    encargado = EncargadoCatalogo(1, "Santiago",
+                                 "correo@mail.com", "123")
 
     encargado.registrar_obra(catalogo, cuadro)
     encargado.registrar_obra(catalogo, escultura)
     encargado.registrar_obra(catalogo, objeto)
 
-    print("Obras en catálogo:")
-    for obra in catalogo.listar_obras():
-        print(f"- {obra.get_titulo()} (${obra.get_valor()})")
 
-    # -------------------------
-    # 4. Restauración
-    # -------------------------
-    restaurador = RestauradorJefe(2, "Maria", "maria@mail.com", "123")
-
-    restauracion = Restauracion("Limpieza", "2024-01-01")
-    cuadro.agregar_restauracion(restauracion)
-
-    print("\nRestauración agregada a:", cuadro.get_titulo())
-
-    # -------------------------
-    # 5. Sala y visitante
-    # -------------------------
     sala = Sala("Sala Principal")
     sala.agregar_obra(cuadro)
     sala.agregar_obra(escultura)
 
     visitante = Visitante(3, "Pedro", "visit@mail.com", "123")
+    restaurador = RestauradorJefe(2, "Maria",
+                                 "maria@mail.com", "123")
 
-    print("\nObras en sala:")
-    for obra in visitante.consultar_obras(sala):
-        print("-", obra.get_titulo())
+    director = Director(4, "Alberto",
+                        "alb@mail.com", "123")
 
-    # -------------------------
-    # 6. Cesión
-    # -------------------------
-    museo_externo = Museo("Museo Louvre", "Francia")
-
-    cesion = Cesion("2025-01-01", "2025-12-31", 10000, museo_externo)
-
-    print("\nObra cedida a:", museo_externo._nombre)
-
-    # -------------------------
-    # 7. Director consulta el valor total
-    # -------------------------
-    director = Director(4, "Alberto", "alb@mail.com", "123")
-
-    total = director.calcular_valor_total(catalogo)
-
-    print("\nValor total del museo:", total)
-
-    # -------------------------
-    # 8. Autenticación
-    # -------------------------
     auth = Autenticacion()
 
-    print("\nLogin correcto:",
-          auth.login(director, "123"))
+    while True:
+        print("\n===== MENÚ MUSEO =====")
+        print("1. Ver catálogo")
+        print("2. Restaurar obra")
+        print("3. Ver obras en sala")
+        print("4. Ceder obra")
+        print("5. Calcular valor total")
+        print("6. Login")
+        print("7. Salir")
 
-    print("\n=== FIN DEL SISTEMA ===")
+        opcion = input("Seleccione: ")
+
+        # 1. VER CATÁLOGO
+        if opcion == "1":
+            print("\nObras en catálogo:")
+            for obra in catalogo.listar_obras():
+                print(f"- {obra.get_titulo()} (${obra.get_valor()})")
+
+        # 2. RESTAURAR OBRA
+        elif opcion == "2":
+            restauracion = Restauracion("Limpieza", "2024-01-01")
+            cuadro.agregar_restauracion(restauracion)
+
+            print("Restauración aplicada a:",
+                  cuadro.get_titulo())
+
+        # 3. VER SALA
+        elif opcion == "3":
+            print("\nObras en sala:")
+            for obra in visitante.consultar_obras(sala):
+                print("-", obra.get_titulo())
+
+        # 4. CESIÓN
+        elif opcion == "4":
+            museo_externo = Museo("Museo Louvre", "Francia")
+
+            cesion = Cesion("2025-01-01",
+                            "2025-12-31",
+                            10000,
+                            museo_externo)
+
+            print("Obra cedida a:", museo_externo._nombre)
+
+        # 5. VALOR TOTAL
+        elif opcion == "5":
+            total = director.calcular_valor_total(catalogo)
+            print("Valor total del museo:", total)
+
+        # 6. LOGIN
+        elif opcion == "6":
+            correo = input("Correo: ")
+            password = input("Password: ")
+
+            print("Login correcto:",
+                  auth.login(director, password))
+
+        # 7. SALIR
+        elif opcion == "7":
+            print("Saliendo del sistema...")
+            break
+
+        else:
+            print("Opción inválida")
 
 
 if __name__ == "__main__":
